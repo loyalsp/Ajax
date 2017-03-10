@@ -1,0 +1,49 @@
+
+<!doctype html>
+<html>
+<head>
+    <title>Get weather by coordinates</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <style type="text/css">
+    </style>    
+</head>
+
+<body>
+<section>
+        <div>Country : <span id="country"></span></div>
+        <div>temp: <span id="temp"></span>f</div>
+
+        <div>city: <span id="city"></span></div>
+        <div>humidity: <span id="humidity"></span></div>
+        <div>wind speed: <span id="wind"></span>kmh</div>
+    </section>
+   <script type="text/javascript">
+        $( document ).ready(function() {
+            $.ajax({
+                type: 'GET',
+                url: "http://api.openweathermap.org/data/2.5/weather?appid=d64a154c314abec09ac7dc97fa668e1d",
+                data: {lat: "32.168701171875", lon: "72.681396484375"},
+
+                success: function (data) {
+
+                    var obj = JSON.parse(JSON.stringify(data));
+                    document.getElementById("temp").innerHTML = obj.main.temp;
+                    document.getElementById("city").innerHTML = obj.name;
+                    document.getElementById("humidity").innerHTML = obj.main.humidity;
+                    document.getElementById("wind").innerHTML = obj.wind.speed;
+                    document.getElementById("country").innerHTML = obj.sys.country;
+                },
+                error: function (x, y, z) {
+                    alert(x.responseText + "  " + x.status);
+                }
+            });
+        });
+
+
+    </script>
+</body>
+</html>

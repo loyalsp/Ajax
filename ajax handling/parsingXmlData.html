@@ -1,0 +1,64 @@
+
+<!doctype html>
+<html>
+<head>
+    <title>Get weather by coordinates</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <style type="text/css">
+    </style>    
+</head>
+
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<section>
+        <div>Country : <span id="country"></span></div>
+        <div>temp: <span id="temp"></span>f</div>
+
+        <div>city: <span id="city"></span></div>
+        <div>humidity: <span id="humidity"></span></div>
+        <div>wind speed: <span id="wind"></span>kmh</div>
+    </section>
+   <script type="text/javascript">
+        $(document).ready(function(){
+
+            $.ajax({
+                type: 'GET',
+                url: "http://api.openweathermap.org/data/2.5/weather?appid=d64a154c314abec09ac7dc97fa668e1d&mode=xml",
+                data: {lat:"32.168701171875",lon:"72.681396484375"},
+                success: function(xml){
+                                //find the value with tagName
+                    $(xml).find("city").each(function(){
+                        $("#city").append($(this).attr("name"));// print attribute values of given tag
+                    });
+
+                    $(xml).find("country").each(function(){
+                        $("#country").append($(this).val("county"));// print tag values of given tagName contry is tagName
+                    });
+                    $(xml).find("temperature").each(function(){
+                        $("#temp").append($(this).attr("value"));
+
+
+                    });
+
+                    $(xml).find("humidity").each(function(){
+                        $("#humidity").append($(this).attr("value"));
+
+
+                    });
+                    $(xml).find("speed").each(function(){
+                        $("#wind").append($(this).attr("value"));
+
+
+                    });
+                }
+            });
+        });
+
+
+    </script>
+</body>
+</html>
